@@ -36,7 +36,7 @@ client.on('messageCreate', async (message) => {
     // Respond to the !random command
     else if (message.content === '!random') {
         try {
-            const { data } = await axios.get('https://balkanflix-server.vercel.app/series'); // Your API endpoint
+            const { data } = await axios.get('https://balkanflix-server.vercel.app/api/content/series'); // Your API endpoint
             const seriesList = data; // Assuming `data` is an array of series
             
             if (seriesList.length === 0) {
