@@ -36,14 +36,20 @@ client.on('messageCreate', async (message) => {
     // Respond to the !random command
     else if (message.content === '!random') {
         try {
-            const response = await axios.get('https://balkanflix-server.vercel.app'); // Replace with your API endpoint
-            const randomSeries = response.data; // Adjust based on your API's response structure
+            const { data } = await axios.get('https://balkanflix-server.vercel.app/series'); // Your API endpoint
+            const seriesList = data; // Assuming `data` is an array of series
             
-            // Assuming the series is an array, pick a random one
-            const randomIndex = Math.floor(Math.random() * randomSeries.length);
-            const series = randomSeries[randomIndex];
-
-            message.channel.send(`Here's a random series: ${series.title}`); // Adjust based on how you want to display the series
+            if (seriesList.length === 0) {
+                message.channel.send('No series available to display.');
+                return;
+            }
+    
+            // Pick a random series from the fetched list
+            const randomIndex = Math.floor(Math.random() * seriesList.length);
+            const series = seriesList[randomIndex];
+    
+            // Assuming series has a property 'title'; adjust accordingly
+            message.channel.send(`Here's a random series: ${series.title}`); 
         } catch (error) {
             console.error('Error fetching series:', error);
             message.channel.send('Sorry, I could not fetch a random series at the moment.');
