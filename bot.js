@@ -49,9 +49,14 @@ client.on('messageCreate', async (message) => {
             // Pick a random series from the fetched list
             const randomIndex = Math.floor(Math.random() * seriesList.length);
             const series = seriesList[randomIndex];
+
+            const imageUrl = series.img;
     
             // Assuming series has a property 'title'; adjust accordingly
-            message.channel.send(`Evo nasumičnog serijala: ${series.title}\nOpis: ${series.description}`); 
+            message.channel.send({
+                content: `Evo nasumičnog serijala: ${series.title}\nOpis: ${series.description}`,
+                files: [imageUrl] // Send the image as an attachment
+            });
         } catch (error) {
             console.error('Error fetching series:', error);
             message.channel.send('Sorry, I could not fetch a random series at the moment.');
