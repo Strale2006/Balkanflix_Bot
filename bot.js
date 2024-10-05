@@ -38,7 +38,7 @@ client.on('messageCreate', async (message) => {
     else if (message.content === '!random') {
         try {
             const { data } = await axios.get('https://balkanflix-server.vercel.app/api/content/series'); // Your API endpoint
-            const seriesList = data; // Assuming `data` is an array of series
+            const seriesList = data.series; // Assuming `data` is an array of series
             console.log(seriesList)
             
             if (seriesList.length === 0) {
@@ -47,7 +47,7 @@ client.on('messageCreate', async (message) => {
             }
     
             // Pick a random series from the fetched list
-            const randomIndex = Math.floor(Math.random() * seriesList.length);
+            const randomIndex = Math.floor(Math.random() * seriesList.series.length);
             const series = seriesList[randomIndex];
     
             // Assuming series has a property 'title'; adjust accordingly
