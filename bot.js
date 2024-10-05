@@ -49,7 +49,7 @@ client.on('messageCreate', async (message) => {
             const imageUrl = `https://raw.githubusercontent.com/Strale2006/SlikeStranice/refs/heads/main/${series.poster}`;
     
             message.channel.send({
-                content: `***Evo nasumičnog serijala: ${series.title}***\nOpis: ${series.description}`,
+                content: `***Evo nasumičnog serijala: ${series.title}***\nOpis: ${series.description}\n***Datum izlaska:*** ${series.date}`,
                 files: [imageUrl] // Send the image as an attachment
             });
         } catch (error) {
