@@ -50,7 +50,7 @@ client.on('messageCreate', async (message) => {
             const randomIndex = Math.floor(Math.random() * seriesList.length);
             const series = seriesList[randomIndex];
 
-            const imageUrl = `https://raw.githubusercontent.com/Strale2006/SlikeStranice/refs/heads/main/${series.img}`;
+            const imageUrl = `https://raw.githubusercontent.com/Strale2006/SlikeStranice/refs/heads/main/${series.poster}`;
     
             // Assuming series has a property 'title'; adjust accordingly
             message.channel.send({
