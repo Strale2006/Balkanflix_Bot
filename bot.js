@@ -48,9 +48,12 @@ client.on('messageCreate', async (message) => {
             const series = seriesList[randomIndex];
 
             const imageUrl = `https://raw.githubusercontent.com/Strale2006/SlikeStranice/refs/heads/main/${series.poster}`;
+
+            const genreList = series.genre.join(', ');
+
     
             message.channel.send({
-                content: `***Evo nasumičnog serijala:*** **${series.title}**\n***Opis:*** ${series.description}\n***Datum izlaska:*** ${series.date}`,
+                content: `***Evo nasumičnog serijala:*** **${series.title}**\n\n***Opis:*** ${series.description}\n\n***Datum izlaska:*** ${series.date}\n***Žanrovi:*** ${genreList}\n***Broj epizoda:*** ${series.ep}\n***Status:*** ${series.status}\n***Studio:*** ${series.studio}\n***Ocena:*** ${series.MAL_ocena} ***Pregledi:*** ${series.totalViews}`,
                 files: [imageUrl] // Send the image as an attachment
             });
         } catch (error) {
