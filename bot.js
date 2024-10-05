@@ -52,7 +52,7 @@ client.on('messageCreate', async (message) => {
 });
 
 // Log in to Discord with your app's token
-client.login('YOUR_DISCORD_BOT_TOKEN').then(() => {
+client.login('MTI5MjA0MTM3OTUwOTQzNjQzNw.G8VFar.rXMRZGwVXZOg-2pZopg-Fd7Wh1NAKbdIWJkL3Y').then(() => {
     console.log('Bot logged in successfully');
 }).catch((err) => {
     console.error('Error logging in:', err);
