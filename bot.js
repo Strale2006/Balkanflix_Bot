@@ -51,7 +51,7 @@ client.on('messageCreate', async (message) => {
             const series = seriesList[randomIndex];
     
             // Assuming series has a property 'title'; adjust accordingly
-            message.channel.send(`Here's a random series: ${series.title}`); 
+            message.channel.send(`Evo nasumičnog serijala: ${series.title}/nOpis: ${series.description}`); 
         } catch (error) {
             console.error('Error fetching series:', error);
             message.channel.send('Sorry, I could not fetch a random series at the moment.');
