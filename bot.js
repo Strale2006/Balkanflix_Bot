@@ -20,7 +20,7 @@ const client = new Client({
 });
 
 // Log the bot in
-client.login('MTI5MjA0MTM3OTUwOTQzNjQzNw.G8VFar.rXMRZGwVXZOg-2pZopg-Fd7Wh1NAKbdIWJkL3Y').then(() => {
+client.login('MTI5MjA0MTM3OTUwOTQzNjQzNw.GBRUIv.UBefJ2oOl00VdnMRuU0C_AnIB7ipSQig-31QJg').then(() => {
     console.log(`Bot logged in as ${client.user.tag}!`);
 }).catch((err) => {
     console.error('Error logging in:', err);
@@ -49,7 +49,7 @@ client.on('messageCreate', async (message) => {
             const imageUrl = `https://raw.githubusercontent.com/Strale2006/SlikeStranice/refs/heads/main/${series.poster}`;
     
             message.channel.send({
-                content: `**Evo nasumičnog serijala: ${series.title}**\nOpis: ${series.description}`,
+                content: `***Evo nasumičnog serijala: ${series.title}***\nOpis: ${series.description}`,
                 files: [imageUrl] // Send the image as an attachment
             });
         } catch (error) {
