@@ -84,7 +84,7 @@ module.exports = (req, res) => {
     res.status(200).send('Discord bot is running.');
 };
 
-const PORT = 5000;
+const PORT = 8002;
 const server = app.listen(PORT, () => console.log(`Listening on the port ${PORT}`));
 process.on('unhandledRejection', (err) => {
     console.log(`Logged error: ${err}`);
