@@ -1,6 +1,14 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const axios = require('axios'); // Import axios
 const { log } = require('console');
+const express = require('express');
+
+const app = express();
+app.use(express.json());
+
+app.get('/', (req, res) => {
+    res.send("Express on Vercel");
+})
 
 const client = new Client({
     intents: [
@@ -75,3 +83,10 @@ client.login('MTI5MjA0MTM3OTUwOTQzNjQzNw.G8VFar.rXMRZGwVXZOg-2pZopg-Fd7Wh1NAKbdI
 module.exports = (req, res) => {
     res.status(200).send('Discord bot is running.');
 };
+
+const PORT = 5000;
+const server = app.listen(PORT, () => console.log(`Listening on the port ${PORT}`));
+process.on('unhandledRejection', (err) => {
+    console.log(`Logged error: ${err}`);
+    server.close(() => process.exit(1));
+});
