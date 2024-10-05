@@ -47,7 +47,7 @@ client.on('messageCreate', async (message) => {
             }
     
             // Pick a random series from the fetched list
-            const randomIndex = Math.floor(Math.random() * seriesList.series.length);
+            const randomIndex = Math.floor(Math.random() * seriesList.length);
             const series = seriesList[randomIndex];
     
             // Assuming series has a property 'title'; adjust accordingly
