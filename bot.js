@@ -1,6 +1,7 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const axios = require('axios'); // Import axios
 const express = require('express');
+require('dotenv').config({path: "./config.env"})
 
 const app = express();
 app.use(express.json());
@@ -20,7 +21,7 @@ const client = new Client({
 });
 
 // Log the bot in
-client.login('MTI5MjA0MTM3OTUwOTQzNjQzNw.GBRUIv.UBefJ2oOl00VdnMRuU0C_AnIB7ipSQig-31QJg').then(() => {
+client.login(process.env.DISCORD_TOKEN).then(() => {
     console.log(`Bot logged in as ${client.user.tag}!`);
 }).catch((err) => {
     console.error('Error logging in:', err);
