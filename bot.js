@@ -1,5 +1,6 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const axios = require('axios'); // Import axios
+const { log } = require('console');
 
 const client = new Client({
     intents: [
@@ -38,6 +39,7 @@ client.on('messageCreate', async (message) => {
         try {
             const { data } = await axios.get('https://balkanflix-server.vercel.app/api/content/series'); // Your API endpoint
             const seriesList = data; // Assuming `data` is an array of series
+            console.log(seriesList)
             
             if (seriesList.length === 0) {
                 message.channel.send('No series available to display.');
