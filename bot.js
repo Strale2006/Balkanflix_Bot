@@ -91,7 +91,14 @@ if (!botInitialized) {
                 const nextEpisode = upcomingEpisodes[0];
 
                 // Format the date for a user-friendly display
-                const episodeDate = new Date(nextEpisode.time).toLocaleString(); // Adjust formatting as needed
+                const episodeDate = new Date(nextEpisode.time).toLocaleString('sr-RS', {
+                    day: 'numeric',
+                    month: 'numeric',
+                    year: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: false // This ensures 24-hour format
+                });
 
                 // Construct the image URL
                 const imageUrl = `https://raw.githubusercontent.com/Strale2006/SlikeStranice/refs/heads/main/${nextEpisode.img}`;
@@ -105,6 +112,33 @@ if (!botInitialized) {
                 console.error('Error fetching episodes:', error);
                 message.channel.send('Sorry, I could not fetch the next episode at the moment.');
             }
+        }
+    });
+
+    app.post('/new-episode', async (req, res) => {
+        const { anime, episodeNumber, img, url } = req.body;
+
+        if (!anime || !episodeNumber || !img || !url) {
+            return res.status(400).json({ error: "Invalid data provided" });
+        }
+
+        // Get the channel by name
+        const channel = client.channels.cache.find(channel => channel.name === "🆕》nove-epizode");
+        if (!channel) {
+            return res.status(500).json({ error: "Channel not found" });
+        }
+
+        try {
+            // Send message to the channel
+            await channel.send({
+                content: `@everyone **Novi prevod je spreman i dostupan na Balkanflixu!🔥**\n\n**Serijal:** ${anime}\n**Epizoda:** ${episodeNumber}\n\n**Gledajte ovde:** ${url}\n\nUživajte u gledanju i hvala što pratite naše prevode! 😊 Ako imate bilo kakve povratne informacije, slobodno ih podelite sa nama.`,
+                files: [`https://raw.githubusercontent.com/Strale2006/SlikeStranice/refs/heads/main/${img}`]  // Send the image
+            });
+
+            res.status(200).json({ message: "Message sent successfully!" });
+        } catch (error) {
+            console.error('Error sending message:', error);
+            res.status(500).json({ error: 'Error sending message' });
         }
     });
 }
