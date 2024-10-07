@@ -63,6 +63,49 @@ if (!botInitialized) {
                 message.channel.send('Sorry, I could not fetch a random series at the moment.');
             }
         }
+        else if (message.content === '!uskoro') {
+            try {
+                // Fetch the scheduled episodes from your API
+                const { data } = await axios.get('https://balkanflix-server.vercel.app/api/schedule/animeSchedule');
+
+                if (data.length === 0) {
+                    message.channel.send('Ni jedna epizoda ne izlazi uskoro.');
+                    return;
+                }
+
+                // Get the current time
+                const currentTime = new Date();
+
+                // Find the next episode with a release time in the future
+                const upcomingEpisodes = data.filter(episode => new Date(episode.time) > currentTime);
+
+                if (upcomingEpisodes.length === 0) {
+                    message.channel.send('Ni jedna epizoda ne izlazi uskoro.');
+                    return;
+                }
+
+                // Sort the upcoming episodes by their release time
+                upcomingEpisodes.sort((a, b) => new Date(a.time) - new Date(b.time));
+
+                // Take the first episode in the sorted list (the next upcoming episode)
+                const nextEpisode = upcomingEpisodes[0];
+
+                // Format the date for a user-friendly display
+                const episodeDate = new Date(nextEpisode.time).toLocaleString(); // Adjust formatting as needed
+
+                // Construct the image URL
+                const imageUrl = `https://raw.githubusercontent.com/Strale2006/SlikeStranice/refs/heads/main/${nextEpisode.img}`;
+
+                // Send the message to the channel
+                message.channel.send({
+                    content: `Sledeća epizoda na sajtu je:\n**${nextEpisode.title}**\n**Epizoda:** ${nextEpisode.ep}\n**Datum izlaska:** ${episodeDate}`,
+                    files: [imageUrl]  // Send the episode image
+                });
+            } catch (error) {
+                console.error('Error fetching episodes:', error);
+                message.channel.send('Sorry, I could not fetch the next episode at the moment.');
+            }
+        }
     });
 }
 
