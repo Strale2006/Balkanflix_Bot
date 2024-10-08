@@ -2,6 +2,8 @@ const { Client, GatewayIntentBits } = require('discord.js');
 const axios = require('axios');
 const express = require('express');
 require('dotenv').config({path: "./config.env"});
+const cron = require('node-cron');
+
 
 const app = express();
 app.use(express.json());
@@ -21,6 +23,66 @@ if (!botInitialized) {
             GatewayIntentBits.GuildMessages,
             GatewayIntentBits.MessageContent,
         ],
+    });
+
+    const genreChannels = {
+        'Akcija': '💥》akcija',
+        'Horor': '😱》horori',
+        'Romansa': '🌹》romansa',
+        'Sportski': '⚽》sportski',
+        'Komedija': '😂》komedija',
+        'Avantura': '🧭》avantura',
+        'Triler': '🕵🏻》triler',
+        'Istorijski': '⏳》istorijski',
+        'Fantazija': '🌌》fantazija'
+    };
+    
+    // Function to fetch a random anime for each genre
+    async function fetchRandomSeriesByGenre(genre) {
+        try {
+            const { data } = await axios.get('https://balkanflix-server.vercel.app/api/content/series');
+            const seriesList = data.series.filter(series => series.genre.includes(genre));
+    
+            if (seriesList.length === 0) {
+                return null;
+            }
+    
+            // Pick a random series from the filtered list
+            const randomIndex = Math.floor(Math.random() * seriesList.length);
+            return seriesList[randomIndex];
+        } catch (error) {
+            console.error(`Error fetching series for genre ${genre}:`, error);
+            return null;
+        }
+    }
+    
+    // Function to send series recommendation to the relevant genre channel
+    async function sendRecommendation(channelName, series, genre) {
+        if (!series) {
+            console.log(`No series found for genre: ${genre}`);
+            return;
+        }
+    
+        const channel = client.channels.cache.find(ch => ch.name === channelName);
+        if (!channel) {
+            console.log(`Channel ${channelName} not found`);
+            return;
+        }
+    
+        const imageUrl = `https://raw.githubusercontent.com/Strale2006/SlikeStranice/refs/heads/main/${series.poster}`;
+    
+        await channel.send({
+            content: `**Nasumična preporuka iz žanra ${genre}:**\n**Serijal:** ${series.title}\n**Opis:** ${series.description}\n**Studio:** ${series.studio}\n**Broj epizoda:** ${series.ep}\n**Ocena:** ${series.MAL_ocena}\n`,
+            files: [imageUrl]
+        });
+    }
+    
+    // Schedule to run 4 times a day (e.g., at 00:00, 06:00, 12:00, 18:00)
+    cron.schedule('0 0,6,12,18 * * *', async () => {
+        for (const [genre, channelName] of Object.entries(genreChannels)) {
+            const series = await fetchRandomSeriesByGenre(genre);
+            await sendRecommendation(channelName, series, genre);
+        }
     });
 
     // Log the bot in
