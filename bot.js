@@ -230,13 +230,14 @@ if (!botInitialized) {
                     content: `***Pogodi anime iz opisa:***\n\n${description}`,
                     components: [row]
                 });
-    
+                
                 // Set up a collector to listen for button clicks
-                const filter = i => i.customId.startsWith('choice_') && i.user.id === message.author.id;
-                const collector = message.channel.createMessageComponentCollector({ filter, time: 15000 });
-    
+                const filter = i => i.customId.startsWith('button') && i.isButton(); // Fix filter to match button IDs
+                const collector = message.channel.createMessageComponentCollector({ filter, time: 25000 });
+                
                 collector.on('collect', async i => {
                     const chosenAnswer = shuffledChoices[parseInt(i.customId.split('_')[1], 10)];
+                    
                     if (chosenAnswer === selectedAnime.title) {
                         await i.reply({ content: `Čestitamo, ${i.user.username}, pogodili ste tačno!`, ephemeral: true });
                     } else {
@@ -244,7 +245,7 @@ if (!botInitialized) {
                     }
                     collector.stop();  // Stop collecting after the first response
                 });
-    
+                
                 collector.on('end', collected => {
                     if (collected.size === 0) {
                         message.channel.send('Niko nije odgovorio na vreme.');
