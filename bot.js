@@ -78,7 +78,7 @@ if (!botInitialized) {
     }
     
     // Schedule to run 4 times a day (e.g., at 00:00, 06:00, 12:00, 18:00)
-    cron.schedule('0 0,6,12,18 * * *', async () => {
+    cron.schedule('* * * * *', async () => {
         for (const [genre, channelName] of Object.entries(genreChannels)) {
             const series = await fetchRandomSeriesByGenre(genre);
             await sendRecommendation(channelName, series, genre);
