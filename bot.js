@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits, MessageActionRow, MessageButton } = require('discord.js');
 const axios = require('axios');
 const express = require('express');
 require('dotenv').config({path: "./config.env"});
@@ -176,6 +176,75 @@ if (!botInitialized) {
             } catch (error) {
                 console.error('Error fetching episodes:', error);
                 message.channel.send('Sorry, I could not fetch the next episode at the moment.');
+            }
+        }
+    });
+
+    client.on('messageCreate', async (message) => {
+        // Ignore messages from the bot or from other channels
+        if (message.author.bot || message.channel.name !== '🎮》pogodi-anime') return;
+    
+        // Command to start the game
+        if (message.content === '!igra') {
+            try {
+                // Fetch anime data from your API or database
+                const { data } = await axios.get('https://balkanflix-server.vercel.app/api/content/series');
+                const seriesList = data.series;
+    
+                if (seriesList.length < 3) {
+                    message.channel.send('Not enough anime data to play the game.');
+                    return;
+                }
+    
+                // Randomly select an anime for the question
+                const randomIndex = Math.floor(Math.random() * seriesList.length);
+                const selectedAnime = seriesList[randomIndex];
+                const description = selectedAnime.description;
+    
+                // Select two incorrect options
+                const otherAnime = seriesList.filter((_, index) => index !== randomIndex);
+                const shuffledOtherAnime = otherAnime.sort(() => 0.5 - Math.random()).slice(0, 2);
+                
+                // Combine the correct and incorrect answers
+                const choices = [selectedAnime.title, ...shuffledOtherAnime.map(anime => anime.title)];
+                const shuffledChoices = choices.sort(() => 0.5 - Math.random());
+    
+                // Create buttons for the user to choose
+                const row = new MessageActionRow().addComponents(
+                    shuffledChoices.map((choice, i) => new MessageButton()
+                        .setCustomId(`choice_${i}`)
+                        .setLabel(choice)
+                        .setStyle('PRIMARY'))
+                );
+    
+                // Send the question and choices to the channel
+                await message.channel.send({
+                    content: `***Pogodi anime iz opisa:***\n\n${description}`,
+                    components: [row]
+                });
+    
+                // Set up a collector to listen for button clicks
+                const filter = i => i.customId.startsWith('choice_') && i.user.id === message.author.id;
+                const collector = message.channel.createMessageComponentCollector({ filter, time: 15000 });
+    
+                collector.on('collect', async i => {
+                    const chosenAnswer = shuffledChoices[parseInt(i.customId.split('_')[1], 10)];
+                    if (chosenAnswer === selectedAnime.title) {
+                        await i.reply({ content: `Čestitamo, ${i.user.username}, pogodili ste tačno!`, ephemeral: true });
+                    } else {
+                        await i.reply({ content: `Pogrešno! Tačan odgovor je: **${selectedAnime.title}**.`, ephemeral: true });
+                    }
+                    collector.stop();  // Stop collecting after the first response
+                });
+    
+                collector.on('end', collected => {
+                    if (collected.size === 0) {
+                        message.channel.send('Niko nije odgovorio na vreme.');
+                    }
+                });
+            } catch (error) {
+                console.error('Error fetching anime:', error);
+                message.channel.send('Sorry, I could not fetch anime data at the moment.');
             }
         }
     });
