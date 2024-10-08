@@ -209,19 +209,24 @@ if (!botInitialized) {
                 const choices = [selectedAnime.title, ...shuffledOtherAnime.map(anime => anime.title)];
                 const shuffledChoices = choices.sort(() => 0.5 - Math.random());
     
+                // Utility function to truncate a string if it's too long
+                function truncateText(text, maxLength) {
+                    return text.length > maxLength ? text.substring(0, maxLength - 3) + '...' : text;
+                }
+
                 // Create buttons for the user to choose
                 const row = new ActionRowBuilder().addComponents(
                     new ButtonBuilder()
                         .setCustomId('button_0')
-                        .setLabel(shuffledChoices[0])
+                        .setLabel(truncateText(shuffledChoices[0], 80))  // Truncate to 80 characters max
                         .setStyle(ButtonStyle.Primary),
                     new ButtonBuilder()
                         .setCustomId('button_1')
-                        .setLabel(shuffledChoices[1])
+                        .setLabel(truncateText(shuffledChoices[1], 80))  // Truncate to 80 characters max
                         .setStyle(ButtonStyle.Primary),
                     new ButtonBuilder()
                         .setCustomId('button_2')
-                        .setLabel(shuffledChoices[2])
+                        .setLabel(truncateText(shuffledChoices[2], 80))  // Truncate to 80 characters max
                         .setStyle(ButtonStyle.Primary)
                 );
     
