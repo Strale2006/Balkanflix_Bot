@@ -29,11 +29,11 @@ if (!botInitialized) {
         'Akcija': '💥》akcija',
         'Horor': '😱》horori',
         'Romansa': '🌹》romansa',
-        'Sportski': '⚽》sportski',
+        'Sport': '⚽》sportski',
         'Komedija': '😂》komedija',
         'Avantura': '🧭》avantura',
         'Triler': '🕵🏻》triler',
-        'Istorijski': '⏳》istorijski',
+        'Istorija': '⏳》istorijski',
         'Fantazija': '🌌》fantazija'
     };
     
