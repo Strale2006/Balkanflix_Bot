@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, MessageActionRow, MessageButton } = require('discord.js');
+const { Client, GatewayIntentBits, ActionRowBuilder, ButtonBuilder, ButtonStyle} = require('discord.js');
 const axios = require('axios');
 const express = require('express');
 require('dotenv').config({path: "./config.env"});
@@ -210,11 +210,19 @@ if (!botInitialized) {
                 const shuffledChoices = choices.sort(() => 0.5 - Math.random());
     
                 // Create buttons for the user to choose
-                const row = new MessageActionRow().addComponents(
-                    shuffledChoices.map((choice, i) => new MessageButton()
-                        .setCustomId(`choice_${i}`)
-                        .setLabel(choice)
-                        .setStyle('PRIMARY'))
+                const row = new ActionRowBuilder().addComponents(
+                    new ButtonBuilder()
+                        .setCustomId('button_0')
+                        .setLabel(shuffledChoices[0])
+                        .setStyle(ButtonStyle.Primary),
+                    new ButtonBuilder()
+                        .setCustomId('button_1')
+                        .setLabel(shuffledChoices[1])
+                        .setStyle(ButtonStyle.Primary),
+                    new ButtonBuilder()
+                        .setCustomId('button_2')
+                        .setLabel(shuffledChoices[2])
+                        .setStyle(ButtonStyle.Primary)
                 );
     
                 // Send the question and choices to the channel
