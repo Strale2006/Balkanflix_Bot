@@ -83,6 +83,9 @@ if (!botInitialized) {
             const series = await fetchRandomSeriesByGenre(genre);
             await sendRecommendation(channelName, series, genre);
         }
+    }, {
+        scheduled: true,
+        timezone: "Europe/Belgrade"
     });
 
     // Log the bot in
