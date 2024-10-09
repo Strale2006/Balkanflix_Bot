@@ -293,7 +293,7 @@ if (!botInitialized) {
                 if (user) {
                     // Display the user's stats
                     await message.channel.send({
-                        content: `***Korisničke statistike za ${message.author.username}:***/n/n **-Korisničko ime na Balkanflixu:** *${user.username}*/n **-Odgledano celih epizoda:** *${user.f_episode.length}*/n **-Omiljeni serijali:** *${user.favorites.join(', ')}*/n **- Profilna slika:**`,
+                        content: `***Korisničke statistike za ${message.author.username}:***\n\n **-Korisničko ime na Balkanflixu:** *${user.username}*\n **-Odgledano celih epizoda:** *${user.f_episode.length}*\n **-Omiljeni serijali:** *${user.favorites.join(', ')}*\n **- Profilna slika:**`,
                         files: [user.pfp]
                     });
                 } else {
