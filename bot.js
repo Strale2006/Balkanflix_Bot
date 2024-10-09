@@ -263,6 +263,46 @@ if (!botInitialized) {
         }
     });
 
+    client.on('messageCreate', async (message) => {
+        if (message.content === '!login') {
+            const loginButton = new ActionRowBuilder().addComponents(
+                new ButtonBuilder()
+                    .setLabel('Login to Balkanflix')
+                    .setStyle(ButtonStyle.Link)
+                    .setURL('https://www.balkanflix.com/login?discordId=' + message.author.id) // Append the Discord ID
+            );
+            
+            await message.channel.send({
+                content: 'Click the button below to login to Balkanflix:',
+                components: [loginButton]
+            });
+        }
+    });
+
+    client.on('messageCreate', async (message) => {
+        if (message.content === '!stats') {
+            // Fetch all users from the Balkanflix database
+            try {
+                const discordId = message.author.id;
+                const allUsersResponse = await axios.get(`https://balkanflix-server.vercel.app/api/users/allUsers`);
+                const allUsers = allUsersResponse.data;
+    
+                // Find the user with the matching Discord ID
+                const user = allUsers.find(user => user.discordId === discordId);
+                
+                if (user) {
+                    // Display the user's stats
+                    message.channel.send(`**User Stats for ${user.username}:**\n- Watched Episodes: ${user.episodeWatchHistory.length}\n- Favorites: ${user.favorites.join(', ')}\n- Total Duration Watched: ${user.watchDuration} hours`);
+                } else {
+                    message.channel.send('User not found. Please make sure you are logged in.');
+                }
+            } catch (error) {
+                console.error('Error fetching user stats:', error);
+                message.channel.send('Could not retrieve your stats at the moment.');
+            }
+        }
+    });
+
     app.post('/new-episode', async (req, res) => {
         const { anime, episodeNumber, img, url } = req.body;
 
