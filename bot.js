@@ -273,7 +273,7 @@ if (!botInitialized) {
             );
             
             await message.channel.send({
-                content: 'Click the button below to login to Balkanflix:',
+                content: 'Kliknite dugme ispod da povežete nalog na Balkanflix(ako ste već ulogovani na Balkanflix, prvo se izlogujte):',
                 components: [loginButton]
             });
         }
@@ -284,7 +284,7 @@ if (!botInitialized) {
             // Fetch all users from the Balkanflix database
             try {
                 const discordId = message.author.id;
-                const allUsersResponse = await axios.get(`https://balkanflix-server.vercel.app/api/users/allUsers`);
+                const allUsersResponse = await axios.get(`https://balkanflix-server.vercel.app/api/auth/allUsers`);
                 const allUsers = allUsersResponse.data;
     
                 // Find the user with the matching Discord ID
@@ -292,9 +292,9 @@ if (!botInitialized) {
                 
                 if (user) {
                     // Display the user's stats
-                    message.channel.send(`**User Stats for ${user.username}:**\n- Watched Episodes: ${user.episodeWatchHistory.length}\n- Favorites: ${user.favorites.join(', ')}\n- Total Duration Watched: ${user.watchDuration} hours`);
+                    message.channel.send(`**Korisničke statistike za ${user.username}:**\n***- Korisničko ime na Balkanflixu: ${user.username}******- Odgledano celih epizoda:*** ${user.f_episode.length}\n- ***Omiljeni serijali:*** ${user.favorites.join(', ')}`);
                 } else {
-                    message.channel.send('User not found. Please make sure you are logged in.');
+                    message.channel.send('Korisnik nije pronađen. Molimo vas ulogujte se sa !login.');
                 }
             } catch (error) {
                 console.error('Error fetching user stats:', error);
