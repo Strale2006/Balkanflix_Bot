@@ -292,7 +292,10 @@ if (!botInitialized) {
                 
                 if (user) {
                     // Display the user's stats
-                    message.channel.send(`**Korisničke statistike za ${message.author.username}:**\n***- Korisničko ime na Balkanflixu: ${user.username}******- Odgledano celih epizoda:*** ${user.f_episode.length}\n- ***Omiljeni serijali:*** ${user.favorites.join(', ')}`);
+                    await message.channel.send({
+                        content: `**Korisničke statistike za ${message.author.username}:**\n**- Korisničko ime na Balkanflixu:** ${user.username}\n**- Odgledano celih epizoda:** ${user.f_episode.length}\n**-Omiljeni serijali:** ${user.favorites.join(', ')}\n**- Profilna slika:`,
+                        files: [user.pfp]
+                    });
                 } else {
                     message.channel.send('Korisnik nije pronađen. Molimo vas ulogujte se sa !login.');
                 }
