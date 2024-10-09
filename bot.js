@@ -287,6 +287,7 @@ if (!botInitialized) {
                 const {data} = await axios.get(`https://balkanflix-server.vercel.app/api/auth/allUsers`);
     
                 // Find the user with the matching Discord ID
+                console.log(data, "DATAAAAA")
                 const user = data.find(user => user.discordId === discordId);
                 console.log(discordId)
                 
