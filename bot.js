@@ -201,8 +201,9 @@ if (!botInitialized) {
                 const selectedAnime = seriesList[randomIndex];
                 let description = selectedAnime.description;
     
-                // Remove the title from the description if present
-                description = description.replace(new RegExp(selectedAnime.title, 'gi'), ''); // 'gi' for global and case-insensitive match
+                // Replace the title in the description with asterisks
+                const titleAsterisks = '*'.repeat(selectedAnime.title.length); // Create a string of asterisks with the same length as the title
+                description = description.replace(new RegExp(selectedAnime.title, 'gi'), titleAsterisks); // Replace title with asterisks
                 description = description.trim(); // Clean up any leading/trailing whitespace
     
                 // Select two incorrect options
@@ -266,6 +267,7 @@ if (!botInitialized) {
             }
         }
     });
+    
     
 
     client.on('messageCreate', async (message) => {
