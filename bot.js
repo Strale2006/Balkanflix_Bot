@@ -269,7 +269,7 @@ if (!botInitialized) {
                 new ButtonBuilder()
                     .setLabel('Login to Balkanflix')
                     .setStyle(ButtonStyle.Link)
-                    .setURL('https://www.balkanflix.com/login?discordId=' + message.author.id) // Append the Discord ID
+                    .setURL(`https://www.balkanflix.com/login?discordId=${message.author.id}`) // Append the Discord ID
             );
             
             await message.channel.send({
