@@ -289,10 +289,11 @@ if (!botInitialized) {
     
                 // Find the user with the matching Discord ID
                 const user = allUsers.find(user => user.discordId === discordId);
+                console.log(discordId)
                 
                 if (user) {
                     // Display the user's stats
-                    message.channel.send(`**Korisničke statistike za ${user.username}:**\n***- Korisničko ime na Balkanflixu: ${user.username}******- Odgledano celih epizoda:*** ${user.f_episode.length}\n- ***Omiljeni serijali:*** ${user.favorites.join(', ')}`);
+                    message.channel.send(`**Korisničke statistike za ${message.author.username}:**\n***- Korisničko ime na Balkanflixu: ${user.username}******- Odgledano celih epizoda:*** ${user.f_episode.length}\n- ***Omiljeni serijali:*** ${user.favorites.join(', ')}`);
                 } else {
                     message.channel.send('Korisnik nije pronađen. Molimo vas ulogujte se sa !login.');
                 }
