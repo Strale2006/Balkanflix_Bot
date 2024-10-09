@@ -199,7 +199,11 @@ if (!botInitialized) {
                 // Randomly select an anime for the question
                 const randomIndex = Math.floor(Math.random() * seriesList.length);
                 const selectedAnime = seriesList[randomIndex];
-                const description = selectedAnime.description;
+                let description = selectedAnime.description;
+    
+                // Remove the title from the description if present
+                description = description.replace(new RegExp(selectedAnime.title, 'gi'), ''); // 'gi' for global and case-insensitive match
+                description = description.trim(); // Clean up any leading/trailing whitespace
     
                 // Select two incorrect options
                 const otherAnime = seriesList.filter((_, index) => index !== randomIndex);
@@ -213,7 +217,7 @@ if (!botInitialized) {
                 function truncateText(text, maxLength) {
                     return text.length > maxLength ? text.substring(0, maxLength - 3) + '...' : text;
                 }
-
+    
                 // Create buttons for the user to choose
                 const row = new ActionRowBuilder().addComponents(
                     new ButtonBuilder()
@@ -237,7 +241,7 @@ if (!botInitialized) {
                 });
                 
                 // Set up a collector to listen for button clicks
-                const filter = i => i.customId.startsWith('button') && i.isButton(); // Fix filter to match button IDs
+                const filter = i => i.customId.startsWith('button') && i.isButton();
                 const collector = message.channel.createMessageComponentCollector({ filter, time: 25000 });
                 
                 collector.on('collect', async i => {
@@ -262,6 +266,7 @@ if (!botInitialized) {
             }
         }
     });
+    
 
     client.on('messageCreate', async (message) => {
         if (message.content === '!login') {
