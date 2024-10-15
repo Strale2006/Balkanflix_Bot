@@ -21,7 +21,7 @@ if (!botInitialized) {
         intents: [
             GatewayIntentBits.Guilds,
             GatewayIntentBits.GuildMessages,
-            GatewayIntentBits.MessageContent,
+            // GatewayIntentBits.MessageContent,
         ],
     });
 
@@ -31,7 +31,7 @@ if (!botInitialized) {
         // 'Romansa': '🌹》romansa',
         // 'Sport': '⚽》sportski',
         'Komedija': '😂》komedija',
-        'Avantura': '🧭》avantura',
+        // 'Avantura': '🧭》avantura',
         // 'Triler': '🕵🏻》triler',
         // 'Istorija': '⏳》istorijski',
         'Fantazija': '🌌》fantazija'
