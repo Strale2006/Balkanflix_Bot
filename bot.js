@@ -28,12 +28,12 @@ if (!botInitialized) {
     const genreChannels = {
         'Akcija': '💥》akcija',
         // 'Horor': '😱》horori',
-        // 'Romansa': '🌹》romansa',
-        // 'Sport': '⚽》sportski',
+        'Romansa': '🌹》romansa',
+        'Sport': '⚽》sportski',
         'Komedija': '😂》komedija',
-        // 'Avantura': '🧭》avantura',
+        'Avantura': '🧭》avantura',
         // 'Triler': '🕵🏻》triler',
-        // 'Istorija': '⏳》istorijski',
+        'Istorija': '⏳》istorijski',
         'Fantazija': '🌌》fantazija'
     };
     
@@ -106,6 +106,7 @@ if (!botInitialized) {
             try {
                 const { data } = await axios.get('https://balkanflix-server.vercel.app/api/content/series');
                 const seriesList = data.series;
+                console.log(message.content, "PORUKAAAA");
 
                 if (seriesList.length === 0) {
                     message.channel.send('No series available to display.');
@@ -267,8 +268,6 @@ if (!botInitialized) {
             }
         }
     });
-    
-    
 
     client.on('messageCreate', async (message) => {
         if (message.content === '!login') {
