@@ -21,7 +21,7 @@ if (!botInitialized) {
         intents: [
             GatewayIntentBits.Guilds,
             GatewayIntentBits.GuildMessages,
-            // GatewayIntentBits.MessageContent,
+            GatewayIntentBits.MessageContent,
         ],
     });
 
