@@ -26,15 +26,15 @@ if (!botInitialized) {
     });
 
     const genreChannels = {
-        'Akcija': '💥》akcija',
+        // 'Akcija': '💥》akcija',
         // 'Horor': '😱》horori',
-        'Romansa': '🌹》romansa',
-        'Sport': '⚽》sportski',
-        'Komedija': '😂》komedija',
-        'Avantura': '🧭》avantura',
+        // 'Romansa': '🌹》romansa',
+        // 'Sport': '⚽》sportski',
+        // 'Komedija': '😂》komedija',
+        // 'Avantura': '🧭》avantura',
         // 'Triler': '🕵🏻》triler',
-        'Istorija': '⏳》istorijski',
-        'Fantazija': '🌌》fantazija'
+        // 'Istorija': '⏳》istorijski',
+        // 'Fantazija': '🌌》fantazija'
     };
     
     // Function to fetch a random anime for each genre
