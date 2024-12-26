@@ -3,10 +3,15 @@ const axios = require('axios');
 const express = require('express');
 require('dotenv').config({path: "./config.env"});
 const cron = require('node-cron');
+const cors = require('cors');
 
 
 const app = express();
 app.use(express.json());
+
+app.use(cors({
+    origin: ['https://www.balkanflix.com', "https://www.balkanflix-server.vercel.app", "http://localhost:3000"]
+}));
 
 app.get('/', (req, res) => {
     res.send("Express on Vercel with Discord Bot");
