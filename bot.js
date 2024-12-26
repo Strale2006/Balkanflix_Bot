@@ -10,7 +10,9 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-    origin: ['https://www.balkanflix.com', "https://www.balkanflix-server.vercel.app", "http://localhost:3000"]
+    origin: ['https://www.balkanflix.com', 'https://www.balkanflix-server.vercel.app', 'http://localhost:3000'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.get('/', (req, res) => {
