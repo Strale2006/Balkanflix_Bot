@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, ActionRowBuilder, ButtonBuilder, ButtonStyle} = require('discord.js');
+const { Client, GatewayIntentBits, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageAttachment } = require('discord.js');
 const axios = require('axios');
 const express = require('express');
 require('dotenv').config({path: "./config.env"});
@@ -175,11 +175,13 @@ if (!botInitialized) {
 
                 // Construct the image URL
                 const imageUrl = `https://raw.githubusercontent.com/Strale2006/SlikeStranice/refs/heads/main/${nextEpisode.img}`;
+                const imageBuffer = await axios.get(imageUrl, { responseType: 'arraybuffer' });
+                const attachment = new MessageAttachment(Buffer.from(imageBuffer.data), 'anime.jpg');
 
                 // Send the message to the channel
                 message.channel.send({
                     content: `Sledeća epizoda na sajtu je:\n**${nextEpisode.title}**\n**Epizoda:** ${nextEpisode.ep}\n**Datum izlaska:** ${episodeDate}`,
-                    files: [imageUrl]  // Send the episode image
+                    files: [attachment]  // Send the episode image
                 });
             } catch (error) {
                 console.error('Error fetching episodes:', error);
