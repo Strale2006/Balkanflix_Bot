@@ -333,8 +333,10 @@ if (!botInitialized) {
         }
 
         try {
+            const encodedImageUrl = encodeURI(img);
+            console.log('Encoded image URL:', encodedImageUrl);
             // Fetch the image from the URL
-            const imageResponse = await axios.get(img, { responseType: 'arraybuffer' });
+            const imageResponse = await axios.get(encodedImageUrl, { responseType: 'arraybuffer' });
             const attachment = new MessageAttachment(Buffer.from(imageResponse.data), 'anime.jpg');
 
             // Send message to the channel
