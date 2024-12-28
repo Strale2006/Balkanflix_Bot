@@ -1,4 +1,5 @@
-const { Client, GatewayIntentBits, ActionRowBuilder, ButtonBuilder, ButtonStyle, MessageAttachment } = require('discord.js');
+const { Client, GatewayIntentBits, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { AttachmentBuilder } = require('discord.js');
 const axios = require('axios');
 const express = require('express');
 require('dotenv').config({path: "./config.env"});
@@ -337,7 +338,7 @@ if (!botInitialized) {
             console.log('Encoded image URL:', encodedImageUrl);
             // Fetch the image from the URL
             const imageResponse = await axios.get(encodedImageUrl, { responseType: 'arraybuffer' });
-            const attachment = new MessageAttachment(Buffer.from(imageResponse.data), 'anime.jpg');
+            const attachment = new AttachmentBuilder(Buffer.from(imageResponse.data), { name: 'anime.jpg' });
 
             // Send message to the channel
             await channel.send({
