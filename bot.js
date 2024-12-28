@@ -327,19 +327,20 @@ if (!botInitialized) {
             return res.status(400).json({ error: "Invalid data provided" });
         }
 
-        // Get the channel by name
         const channel = client.channels.cache.find(channel => channel.name === "🆕nove-epizode");
         if (!channel) {
             return res.status(500).json({ error: "Channel not found" });
         }
 
         try {
-            const imageBuffer = await axios.get(img, { responseType: 'arraybuffer' });
-            const attachment = new MessageAttachment(Buffer.from(imageBuffer.data), 'anime.jpg');
+            // Fetch the image from the URL
+            const imageResponse = await axios.get(img, { responseType: 'arraybuffer' });
+            const attachment = new MessageAttachment(Buffer.from(imageResponse.data), 'anime.jpg');
 
+            // Send message to the channel
             await channel.send({
                 content: `@everyone **Novi prevod je spreman i dostupan na Balkanflixu!🔥**\n\n**Serijal:** ${anime}\n**Epizoda:** ${episodeNumber}\n\n**Gledajte ovde:** ${url}\n\nUživajte u gledanju i hvala što pratite naše prevode! 😊 Ako imate bilo kakve povratne informacije, slobodno ih podelite sa nama.`,
-                files: [attachment]
+                files: [attachment],
             });
 
             res.status(200).json({ message: "Message sent successfully!" });
