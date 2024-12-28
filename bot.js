@@ -191,7 +191,7 @@ if (!botInitialized) {
 
     client.on('messageCreate', async (message) => {
         // Ignore messages from the bot or from other channels
-        if (message.author.bot || message.channel.name !== '🎮pogodi-anime') return;
+        if (message.author.bot || message.channel.name !== '🎮ᴘᴏɢᴏᴅɪ-ᴀɴɪᴍᴇ') return;
     
         // Command to start the game
         if (message.content === '!igra') {
@@ -328,7 +328,7 @@ if (!botInitialized) {
         }
 
         // Get the channel by name
-        const channel = client.channels.cache.find(channel => channel.name === "🆕nove-epizode");
+        const channel = client.channels.cache.find(channel => channel.name === "🆕ɴᴏᴠᴇ-ᴇᴘɪᴢᴏᴅᴇ");
         if (!channel) {
             return res.status(500).json({ error: "Channel not found" });
         }
