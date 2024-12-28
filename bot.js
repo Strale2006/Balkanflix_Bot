@@ -191,7 +191,7 @@ if (!botInitialized) {
 
     client.on('messageCreate', async (message) => {
         // Ignore messages from the bot or from other channels
-        if (message.author.bot || message.channel.name !== '🎮》pogodi-anime') return;
+        if (message.author.bot || message.channel.name !== '🎮pogodi-anime') return;
     
         // Command to start the game
         if (message.content === '!igra') {
