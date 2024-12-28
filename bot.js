@@ -334,7 +334,7 @@ if (!botInitialized) {
         }
 
         try {
-            const encodedImageUrl = encodeURI(img);
+            const encodedImageUrl = encodeURI(`https://raw.githubusercontent.com/Strale2006/SlikeStranice/main/${img}`);
             console.log('Encoded image URL:', encodedImageUrl);
             // Fetch the image from the URL
             const imageResponse = await axios.get(encodedImageUrl, { responseType: 'arraybuffer' });
