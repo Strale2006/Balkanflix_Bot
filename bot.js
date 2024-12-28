@@ -332,13 +332,20 @@ if (!botInitialized) {
         if (!channel) {
             return res.status(500).json({ error: "Channel not found" });
         }
-        const imageBuffer = await axios.get(img, { responseType: 'arraybuffer' });
+        let imageBuffer;
+
+        try {
+            imageBuffer = await axios.get(img, { responseType: 'arraybuffer' });
+        } catch (error) {
+            console.error("Error fetching the image:", error.message);
+            return res.status(502).json({ error: "Failed to fetch image" });
+        }
         const attachment = new MessageAttachment(Buffer.from(imageBuffer.data), 'anime.jpg');
         try {
             // Send message to the channel
             await channel.send({
                 content: `@everyone **Novi prevod je spreman i dostupan na Balkanflixu!🔥**\n\n**Serijal:** ${anime}\n**Epizoda:** ${episodeNumber}\n\n**Gledajte ovde:** ${url}\n\nUživajte u gledanju i hvala što pratite naše prevode! 😊 Ako imate bilo kakve povratne informacije, slobodno ih podelite sa nama.`,
-                files: [`https://raw.githubusercontent.com/Strale2006/SlikeStranice/refs/heads/main/${attachment}`]  // Send the image
+                files: [attachment]
             });
 
             res.status(200).json({ message: "Message sent successfully!" });
