@@ -175,13 +175,12 @@ if (!botInitialized) {
 
                 // Construct the image URL
                 const imageUrl = `https://raw.githubusercontent.com/Strale2006/SlikeStranice/refs/heads/main/${nextEpisode.img}`;
-                const imageBuffer = await axios.get(imageUrl, { responseType: 'arraybuffer' });
-                const attachment = new MessageAttachment(Buffer.from(imageBuffer.data), 'anime.jpg');
+
 
                 // Send the message to the channel
                 message.channel.send({
                     content: `Sledeća epizoda na sajtu je:\n**${nextEpisode.title}**\n**Epizoda:** ${nextEpisode.ep}\n**Datum izlaska:** ${episodeDate}`,
-                    files: [attachment]  // Send the episode image
+                    files: [imageUrl]  // Send the episode image
                 });
             } catch (error) {
                 console.error('Error fetching episodes:', error);
@@ -329,16 +328,17 @@ if (!botInitialized) {
         }
 
         // Get the channel by name
-        const channel = client.channels.cache.find(channel => channel.name === "🆕》nove-epizode");
+        const channel = client.channels.cache.find(channel => channel.name === "🆕nove-epizode");
         if (!channel) {
             return res.status(500).json({ error: "Channel not found" });
         }
-
+        const imageBuffer = await axios.get(img, { responseType: 'arraybuffer' });
+        const attachment = new MessageAttachment(Buffer.from(imageBuffer.data), 'anime.jpg');
         try {
             // Send message to the channel
             await channel.send({
                 content: `@everyone **Novi prevod je spreman i dostupan na Balkanflixu!🔥**\n\n**Serijal:** ${anime}\n**Epizoda:** ${episodeNumber}\n\n**Gledajte ovde:** ${url}\n\nUživajte u gledanju i hvala što pratite naše prevode! 😊 Ako imate bilo kakve povratne informacije, slobodno ih podelite sa nama.`,
-                files: [`https://raw.githubusercontent.com/Strale2006/SlikeStranice/refs/heads/main/${img}`]  // Send the image
+                files: [`https://raw.githubusercontent.com/Strale2006/SlikeStranice/refs/heads/main/${attachment}`]  // Send the image
             });
 
             res.status(200).json({ message: "Message sent successfully!" });
