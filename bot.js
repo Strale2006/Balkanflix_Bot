@@ -299,11 +299,8 @@ if (!botInitialized) {
             // Fetch all users from the Balkanflix database
             try {
                 const discordId = message.author.id;
-                const {data} = await axios.get(`https://balkanflix-server.vercel.app/api/auth/allUsers`);
-    
-                // Find the user with the matching Discord ID
-                const user = data.data.find(user => user.discordId === discordId);
-                console.log(discordId)
+                const { data } = await axios.get(`https://balkanflix-server.vercel.app/api/auth/byDiscord/${discordId}`);
+                const user = data.data;
                 
                 if (user) {
                     // Display the user's stats
