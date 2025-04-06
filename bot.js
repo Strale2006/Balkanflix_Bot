@@ -318,6 +318,7 @@ if (!botInitialized) {
         }
     });
 
+
     app.post('/new-episode', async (req, res) => {
         const { anime, episodeNumber, img, url } = req.body;
 
